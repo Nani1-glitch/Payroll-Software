@@ -1,0 +1,96 @@
+{% extends "layout.html" %}
+{% block content %}
+
+    <div class="bs-example">
+        <div class="bs-example">
+            <!-- Button trigger modal for Department-->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newDepartment">
+                Add a new department
+            </button>
+        </div>
+        <!-- Modal for adding Department-->
+        <div class="modal fade" id="newDepartment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add department details</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/payrolls/departments/" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="formGroupExampleInput">Department Name</label>
+                                <input name="dpt_name" required type="text" class="form-control"
+                                       id="formGroupExampleInput"
+                                       placeholder="e.g. ICT">
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" class="form-control btn-primary">
+                            </div>
+
+                        </form>
+                    </div>
+                    <!-- <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="bs-example">
+
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">Department ID</th>
+                <th scope="col">Department name</th>
+                <th scope="col">Employees</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for each in departments %}
+
+                <tr>
+                    <th scope="row">{{ each.id }}</th>
+                    <td>{{ each.dpt_name }}</td>
+                    <td>
+                        <button><a href="/payrolls/employees">View employees</a></button>
+                    </td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+        <div class="row">
+            <div class="col-sm-6">
+
+                <div class="card">
+
+                    <img class="card-img" height="400" width="400" src="{{ graph | safe }}">
+
+                </div>
+            </div>
+            <div class="col-sm-6">
+
+                <div class="card">
+
+                    <img class="card-img" height="400" width="400" src="{{ bar_graph | safe }}">
+
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+{% endblock %}
+
+
